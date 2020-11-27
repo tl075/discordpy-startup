@@ -15,8 +15,8 @@ async def on_command_error(ctx, error):
 
 
 @bot.command()
-async def ping(ctx):
-    await ctx.send('ponng')
+#async def ping(ctx):
+#    await ctx.send('ponng')
 async def aooni(ctx):
     await ctx.send('なんですか')
 
