@@ -3,7 +3,7 @@ import os
 import traceback
 import discord
 
-bot = commands.Bot(command_prefix='/')
+bot = commands.Bot()
 token = os.environ['DISCORD_BOT_TOKEN']
 
 
@@ -18,15 +18,10 @@ async def on_command_error(ctx, error):
 async def aooni(ctx):
     await ctx.send('なんですか')
 
-@bot.event
-async def on_message(message):
-    # 「おはよう」で始まるか調べる
-    if message.content.startswith("おはよう"):
-        # 送り主がBotだった場合反応したくないので
-        if client.user != message.author:
-            # メッセージを書きます
-            m = "おはようございます" + message.author.name + "さん！"
-            # メッセージが送られてきたチャンネルへメッセージを送ります
-            await message.channel.send(m)
+@bot.command()
+async def おはよう(ctx):
+    # メッセージを書きます
+    m = "おはようございます" + ctx.author.name + "さん！"
+    await ctx.channel.send(m)
 
 bot.run(token)
