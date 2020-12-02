@@ -1,27 +1,27 @@
-from discord.ext import commands
-import os
-import traceback
+# インストールした discord.py を読み込む
 import discord
 
-bot = commands.Bot(command_prefix='///')
-token = os.environ['DISCORD_BOT_TOKEN']
+# 自分のBotのアクセストークンに置き換えてください
+TOKEN = 'NzQ5NTk2NjcwMjk1Mjc3NjI4.X0uSTQ.oQWrS5vcDcCXtJli_IeWdivXh2o'
 
+# 接続に必要なオブジェクトを生成
+client = discord.Client()
 
-@bot.event
-async def on_command_error(ctx, error):
-    orig_error = getattr(error, "original", error)
-    error_msg = ''.join(traceback.TracebackException.from_exception(orig_error).format())
-    await ctx.send(error_msg)
+# 起動時に動作する処理
+@client.event
+async def on_ready():
+    # 起動したらターミナルにログイン通知が表示される
+    print('ログインしました')
 
+# メッセージ受信時に動作する処理
+@client.event
+async def on_message(message):
+    # メッセージ送信者がBotだった場合は無視する
+    if message.author.bot:
+        return
+    # 「/neko」と発言したら「にゃーん」が返る処理
+    if message.content == '/neko':
+        await message.channel.send('にゃーん')
 
-@bot.command()
-async def aooni(ctx):
-    await ctx.send('なんですか')
-
-@bot.command()
-async def おはよう(ctx):
-    # メッセージを書きます
-    m = "おはようございます" + ctx.author.name + "さん！"
-    await ctx.channel.send(m)
-
-bot.run(token)
+# Botの起動とDiscordサーバーへの接続
+client.run(TOKEN)
