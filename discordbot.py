@@ -1,8 +1,12 @@
 # インストールした discord.py を読み込む
 import discord
+from discord.ext import commands
+import os
+import traceback
 
 # 自分のBotのアクセストークンに置き換えてください
 TOKEN = 'DISCORD_BOT_TOKEN'
+bot = commands.Bot(command_prefix='')
 
 # 接続に必要なオブジェクトを生成
 client = discord.Client()
@@ -14,6 +18,9 @@ async def on_ready():
     print('ログインしました')
 
 # メッセージ受信時に動作する処理
+@bot.command()
+async def ping(ctx):
+    await ctx.send('pong')
 @client.event
 async def on_message(message):
     # メッセージ送信者がBotだった場合は無視する
